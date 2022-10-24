@@ -9,7 +9,10 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "doctrine/annotations": "^1.13",
         "fideloper/proxy": "^4.4",
+        "laravel-doctrine/migrations": "^2.3",
+        "laravel-doctrine/orm": "~1.5",
         "laravel/framework": "^6.20.26",
         "laravel/tinker": "^2.5"
     },
