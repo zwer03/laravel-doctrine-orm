@@ -28,6 +28,17 @@ class Scientist
      */
     protected $lastname;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Theory", mappedBy="scientist", cascade={"persist"})
+    * @var ArrayCollection|Theory[]
+    */
+    protected $theories;
+
+    public function __construct()
+    {
+        $this->theories = new ArrayCollection;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -51,5 +62,18 @@ class Scientist
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
+    }
+
+    public function addTheory(Theory $theory)
+    {
+        if(!$this->theories->contains($theory)) {
+            $theory->setScientist($this);
+            $this->theories->add($theory);
+        }
+    }
+
+    public function getTheories()
+    {
+        return $this->theories;
     }
 }
