@@ -34,9 +34,16 @@ class Scientist
     */
     protected $theories;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Group", mappedBy="groupScientists")
+     * @var ArrayCollection|Group[]
+     */
+    protected $scientistGroups;
+
     public function __construct()
     {
         $this->theories = new ArrayCollection;
+        $this->scientistGroups = new ArrayCollection();
     }
 
     public function getId()
@@ -66,7 +73,7 @@ class Scientist
 
     public function addTheory(Theory $theory)
     {
-        if(!$this->theories->contains($theory)) {
+        if (!$this->theories->contains($theory)) {
             $theory->setScientist($this);
             $this->theories->add($theory);
         }
@@ -75,5 +82,19 @@ class Scientist
     public function getTheories()
     {
         return $this->theories;
+    }
+
+    public function getScientistGroups()
+    {
+        return $this->scientistGroups;
+    }
+
+    public function addScientistGroups(Group $group)
+    {
+        if ($this->scientistGroups->contains($group)) {
+            return;
+        }
+        
+        $this->scientistGroups[] = $group;
     }
 }
