@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Embeddables\Address;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -29,6 +30,11 @@ class Scientist
     protected $lastname;
 
     /**
+     * @ORM\Embedded(class="App\Embeddables\Address", columnPrefix=false)
+     */
+    protected $address;
+
+    /**
     * @ORM\OneToMany(targetEntity="Theory", mappedBy="scientist", cascade={"persist"})
     * @var ArrayCollection|Theory[]
     */
@@ -44,6 +50,7 @@ class Scientist
     {
         $this->theories = new ArrayCollection;
         $this->scientistGroups = new ArrayCollection();
+        $this->address = new Address();
     }
 
     public function getId()
@@ -96,5 +103,45 @@ class Scientist
         }
         
         $this->scientistGroups[] = $group;
+    }
+
+    public function getStreet(): string
+    {
+        return $this->address->getStreet();
+    }
+
+    public function setStreet(string $street)
+    {
+        $this->address->setStreet($street);
+    }
+
+    public function getPostalCode(): string
+    {
+        return $this->address->getPostalCode();
+    }
+
+    public function setPostalCode(string $postalCode)
+    {
+        $this->address->setPostalCode($postalCode);
+    }
+
+    public function getCity(): string
+    {
+        return $this->address->getCity();
+    }
+
+    public function setCity(string $city)
+    {
+        $this->address->setCity($city);
+    }
+
+    public function getCountry(): string
+    {
+        return $this->address->getCountry();
+    }
+
+    public function setCountry(string $country)
+    {
+        $this->address->setCountry($country);
     }
 }
