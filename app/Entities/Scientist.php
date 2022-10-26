@@ -41,6 +41,12 @@ class Scientist
     protected $theories;
 
     /**
+    * @ORM\OneToMany(targetEntity="Project", mappedBy="scientist", cascade={"persist"})
+    * @var ArrayCollection|Project[]
+    */
+    protected $projects;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Group", mappedBy="groupScientists")
      * @var ArrayCollection|Group[]
      */
@@ -49,6 +55,7 @@ class Scientist
     public function __construct()
     {
         $this->theories = new ArrayCollection;
+        $this->projects = new ArrayCollection;
         $this->scientistGroups = new ArrayCollection();
         $this->address = new Address();
     }
@@ -89,6 +96,19 @@ class Scientist
     public function getTheories()
     {
         return $this->theories;
+    }
+
+    public function addProject(Project $project)
+    {
+        if (!$this->projects->contains($project)) {
+            $project->setScientist($this);
+            $this->projects->add($project);
+        }
+    }
+
+    public function getProjects()
+    {
+        return $this->projects;
     }
 
     public function getScientistGroups()
