@@ -45,7 +45,9 @@ return [
             |
             */
             'events'        => [
-                'listeners'   => [],
+                'listeners'   => [
+                    Doctrine\ORM\Events::onFlush => App\Listeners\ScientistListener::class
+                ],
                 'subscribers' => []
             ],
             'filters'       => [],
