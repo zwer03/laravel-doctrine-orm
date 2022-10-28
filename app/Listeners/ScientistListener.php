@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Entities\Scientist;
+use Illuminate\Support\Facades\Log;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
 class ScientistListener
@@ -20,9 +21,21 @@ class ScientistListener
             }
         }
 
-        // foreach ($uow->getScheduledEntityUpdates() AS $entity) {
-
-        // }
+        foreach ($uow->getScheduledEntityUpdates() as $entity) {
+            if ($entity instanceof Scientist) {
+                $changeSet = $uow->getEntityChangeSet($entity);
+                if (
+                    isset($changeSet) &&
+                    $changeSet['firstname'] &&
+                    $changeSet['firstname'][0] !== $changeSet['firstname'][1]
+                ) {
+                    $id = $entity->getId();
+                    Log::info('Scientist with id: ' . $id . ' has been updated its firstname');
+                } else {
+                    Log::info('Scientist has been updated');
+                }
+            }
+        }
 
         // foreach ($uow->getScheduledEntityDeletions() AS $entity) {
 
