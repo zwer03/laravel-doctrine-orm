@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\ValueObject\Money;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
@@ -29,6 +30,13 @@ class Project
     */
     protected $scientist;
 
+    /**
+     * @ORM\Column(type="money", name="cost")
+     *
+     * @var Money
+     */
+    private $money;
+
     public function getId()
     {
         return $this->id;
@@ -52,5 +60,21 @@ class Project
     public function getScientist()
     {
         return $this->scientist;
+    }
+
+    /**
+     * @param Money $money
+     */
+    public function setMoney(Money $money)
+    {
+        $this->money = $money;
+    }
+
+    /**
+     * @return Money
+     */
+    public function getMoney()
+    {
+        return $this->money;
     }
 }
