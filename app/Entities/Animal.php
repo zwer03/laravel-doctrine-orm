@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="discriminator", type="string")
  * @ORM\DiscriminatorMap({"animal" = "Animal", "cat" = "Cat", "dog" = "Dog"})
  */
-class Animal
+abstract class Animal
 {
     /**
      * @var int
